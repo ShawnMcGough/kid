@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace KidBrowserEngine.Css
 {
     public class Stylesheet
     {
-        private List<Rule> Rules { get; set; }
+        public List<Rule> Rules { get; set; }
     }
 }

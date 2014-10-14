@@ -1,5 +1,4 @@
-﻿using System;
-using KidBrowserEngine.Html;
+﻿using KidBrowserEngine.Html;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace KidUnitTests

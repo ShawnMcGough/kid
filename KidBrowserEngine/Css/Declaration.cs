@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KidBrowserEngine.Css
+﻿namespace KidBrowserEngine.Css
 {
-    internal class Declaration
+    public struct Declaration
     {
+        public string Name;
+        public string Value;
     }
 }

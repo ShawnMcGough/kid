@@ -1,6 +1,7 @@
 ﻿namespace KidBrowserEngine.Css
 {
-    public class Selector
+    internal enum Unit
     {
+        Px
     }
 }

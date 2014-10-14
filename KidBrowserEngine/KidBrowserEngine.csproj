@@ -35,10 +35,14 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Css\Unit.cs" />
+    <Compile Include="Css\Value.cs" />
     <Compile Include="Css\Declaration.cs" />
     <Compile Include="Css\Rule.cs" />
+    <Compile Include="Css\SimpleSelector.cs" />
     <Compile Include="Css\Selector.cs" />
     <Compile Include="Css\Stylesheet.cs" />
     <Compile Include="Dom\NodeType.cs" />

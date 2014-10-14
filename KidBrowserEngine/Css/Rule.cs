@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace KidBrowserEngine.Css
 {
     public class Rule
     {
-        private List<Selector> Selectors;
-        private List<Declaration> Declarations;
+        public List<Selector> Selectors;
+        public List<Declaration> Declarations;
     }
 
     
