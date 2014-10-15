@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace KidBrowserEngine.Css
+﻿namespace KidBrowserEngine.Css
 {
-    internal class SimpleSelector
+    public class SimpleSelector : Selector
     {
-        public string TagName;
-        public string Id;
-        public List<string> Class;
+        public override SelectorType Type
+        {
+            get { return SelectorType.Simple; }
+        }
     }
 }

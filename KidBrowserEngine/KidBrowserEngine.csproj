@@ -38,6 +38,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Css\Parser.cs" />
+    <Compile Include="Css\SelectorType.cs" />
     <Compile Include="Css\Unit.cs" />
     <Compile Include="Css\Value.cs" />
     <Compile Include="Css\Declaration.cs" />
