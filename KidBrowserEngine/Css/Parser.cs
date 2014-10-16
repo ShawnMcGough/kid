@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -63,7 +64,7 @@ namespace KidBrowserEngine.Css
                 if (c == '{')
                     break;
 
-                throw new Exception(string.Format("Unexpected character '{0}' in selector list.", c));
+                throw new FormatException(string.Format("Unexpected character '{0}' in selector list.", c));
 
             }
 
@@ -71,19 +72,120 @@ namespace KidBrowserEngine.Css
             return selectors.OrderByDescending(s => s.Specificity()).ToList();
         }
 
-        // Parse one simple selector, e.g.: `type#id.class1.class2.class3`
+        // Parse one simple selector type#id.class1.class2.class3
         private SimpleSelector ParseSimpleSelector()
         {
             var selector = new SimpleSelector();
 
             while (!EndOfInput())
             {
+                var c = NextChar();
 
+                if (c == '#')
+                {
+                    ConsumeChar();
+                    selector.Id = ParseIdentifier();
+                }
+                else if (c == '.')
+                {
+                    ConsumeChar();
+                    selector.Class.Add(ParseIdentifier());
+                }
+                else if (c == '*')
+                    ConsumeChar();
+
+                else if (IsValidIdentifierChar(c))
+                    selector.TagName = ParseIdentifier();
+                else
+                    break;
 
             }
 
             return selector;
         }
+
+        private string ParseIdentifier()
+        {
+            return ConsumeWhile(c => IsValidIdentifierChar(c));
+        }
+
+        private static bool IsValidIdentifierChar(char c)
+        {
+            if (char.IsLetterOrDigit(c))
+                return true;
+            return c == '-' || c == '_';
+        }
+
+        private List<Declaration> ParseDeclarations()
+        {
+            var declarations = new List<Declaration>();
+            Contract.Assert(ConsumeChar() == '{');
+            while (true)
+            {
+                ConsumeWhiteSpace();
+                if (NextChar() == '}')
+                {
+                    ConsumeChar();
+                    break;
+                }
+                declarations.Add(ParseDeclaration());
+
+            }
+            return declarations;
+
+        }
+
+        // Parse one <property>: <value>; declaration.
+        private Declaration ParseDeclaration()
+        {
+            var declaration = new Declaration { Name = ParseIdentifier() };
+            ConsumeWhiteSpace();
+            Contract.Assert(ConsumeChar() == ':');
+            ConsumeWhiteSpace();
+            declaration.Value = ParseValue();
+            ConsumeWhiteSpace();
+            Contract.Assert(ConsumeChar() == ';');
+
+            return declaration;
+        }
+
+        private Value ParseValue()
+        {
+            var c = NextChar();
+
+            var value = new Value();
+            if (Char.IsDigit(c))
+                value.Length = ParseLength();
+            else if (c == '#')
+                value.Color = ParseColor();
+            else
+                value.Keyword = ParseIdentifier();
+
+            return value;
+        }
+
+        private byte[] ParseColor()
+        {
+            Contract.Assert(ConsumeChar() == '#');
+            var hex = ConsumeWhile(c => Char.IsLetterOrDigit(c));
+            return Enumerable.Range(0, hex.Length)
+                 .Where(x => x % 2 == 0)
+                 .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+                 .ToArray();
+        }
+
+        private KeyValuePair<float, Unit> ParseLength()
+        {
+            var len = float.Parse(ConsumeWhile(c => Char.IsDigit(c) || c == '.'));
+            
+            var unit = ParseIdentifier().ToLowerInvariant();
+            if (unit != "px")
+                throw new FormatException("Unrecognized unit.");
+            
+            return new KeyValuePair<float, Unit>(len, Unit.Px);
+            
+        }
+
 
         private void ConsumeWhiteSpace()
         {
