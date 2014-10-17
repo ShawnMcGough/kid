@@ -2,7 +2,7 @@
 
 namespace KidBrowserEngine.Css
 {
-    internal class Value
+    public class Value
     {
         public string Keyword;
         public byte[] Color = { 0, 0, 0, 0 };

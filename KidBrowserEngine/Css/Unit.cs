@@ -1,6 +1,6 @@
 ﻿namespace KidBrowserEngine.Css
 {
-    internal enum Unit
+    public enum Unit
     {
         Px
     }

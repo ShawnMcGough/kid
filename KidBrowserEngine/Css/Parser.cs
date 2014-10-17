@@ -13,10 +13,14 @@ namespace KidBrowserEngine.Css
         private int Position { get; set; }
         private string Input { get; set; }
 
-        public Parser(string html, int position = 0)
+        public Parser(string css, int position = 0)
         {
             Position = position;
-            Input = html;
+            Input = css;
+        }
+        public static Stylesheet Parse(string css)
+        {
+            return new Stylesheet { Rules = new Parser(css).ParseRules() };
         }
 
         // Parse a list of rule sets, separated by optional whitespace.
@@ -50,7 +54,7 @@ namespace KidBrowserEngine.Css
             var selectors = new List<Selector>();
             while (true)
             {
-                selectors.Add(new SimpleSelector());
+                selectors.Add(ParseSimpleSelector());
                 ConsumeWhiteSpace();
                 var c = NextChar();
 
@@ -58,13 +62,13 @@ namespace KidBrowserEngine.Css
                 {
                     ConsumeChar();
                     ConsumeWhiteSpace();
-                    break;
                 }
 
-                if (c == '{')
+                else if (c == '{')
                     break;
 
-                throw new FormatException(string.Format("Unexpected character '{0}' in selector list.", c));
+                else 
+                    throw new FormatException(string.Format("Unexpected character '{0}' in selector list.", c));
 
             }
 
@@ -177,13 +181,13 @@ namespace KidBrowserEngine.Css
         private KeyValuePair<float, Unit> ParseLength()
         {
             var len = float.Parse(ConsumeWhile(c => Char.IsDigit(c) || c == '.'));
-            
+
             var unit = ParseIdentifier().ToLowerInvariant();
             if (unit != "px")
                 throw new FormatException("Unrecognized unit.");
-            
+
             return new KeyValuePair<float, Unit>(len, Unit.Px);
-            
+
         }
 
 
