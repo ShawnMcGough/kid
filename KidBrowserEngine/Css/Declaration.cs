@@ -2,7 +2,7 @@
 {
     public struct Declaration
     {
-        public string Name;
-        public Value Value;
+        public string Name { get; set; }
+        public Value Value { get; set; }
     }
 }

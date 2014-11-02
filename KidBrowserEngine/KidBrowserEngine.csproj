@@ -47,13 +47,19 @@
     <Compile Include="Css\SimpleSelector.cs" />
     <Compile Include="Css\Selector.cs" />
     <Compile Include="Css\Stylesheet.cs" />
+    <Compile Include="Dom\ElementData.cs" />
     <Compile Include="Dom\NodeType.cs" />
     <Compile Include="Dom\ElementNode.cs" />
     <Compile Include="Dom\Node.cs" />
     <Compile Include="Dom\TextNode.cs" />
     <Compile Include="Html\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Style\Display.cs" />
+    <Compile Include="Style\MatchedRule.cs" />
+    <Compile Include="Style\StyledNode.cs" />
+    <Compile Include="Style\Styler.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

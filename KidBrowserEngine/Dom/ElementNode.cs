@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace KidBrowserEngine.Dom
 {
@@ -14,15 +15,5 @@ namespace KidBrowserEngine.Dom
         }
     }
     
-    public class ElementData
-    {
-        public string TagName { get; set; }
-        public Dictionary<string, string> Attributes { get; set; }
 
-        public ElementData(string name, Dictionary<string, string> attributes)
-        {
-            TagName = name;
-            Attributes = attributes;
-        }
-    }
 }

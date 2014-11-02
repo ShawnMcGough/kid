@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace KidUnitTests
 {
     [TestClass]
-    public class ParserUnitTests
+    public class HtmlParserUnitTests
     {
         [TestMethod]
         public void Parser_ParseValidHtml_ReturnsCorrectNodeCount()

@@ -4,8 +4,8 @@ namespace KidBrowserEngine.Css
 {
     public class Rule
     {
-        public List<Selector> Selectors;
-        public List<Declaration> Declarations;
+        public List<Selector> Selectors { get; set; }
+        public List<Declaration> Declarations { get; set; }
     }
 
     
