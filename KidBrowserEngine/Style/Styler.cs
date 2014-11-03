@@ -7,9 +7,8 @@ namespace KidBrowserEngine.Style
 {
     public class Styler
     {
-        //public Dictionary<string, Value> PropertyMap = new Dictionary<string, Value>();
 
-        public StyledNode GetStyleTree(Node root, Stylesheet stylesheet)
+        public static StyledNode GetStyleTree(Node root, Stylesheet stylesheet)
         {
             var styledNode = new StyledNode
             {
@@ -26,7 +25,7 @@ namespace KidBrowserEngine.Style
             return styledNode;
         }
 
-        private Dictionary<string, Value> GetSpecifiedValues(ElementNode elem, Stylesheet stylesheet)
+        private static Dictionary<string, Value> GetSpecifiedValues(ElementNode elem, Stylesheet stylesheet)
         {
             var rules = GetMatchingRules(elem, stylesheet);
 
@@ -37,14 +36,17 @@ namespace KidBrowserEngine.Style
                     .ToDictionary(declaration => declaration.Name, declaration => declaration.Value);
         }
 
-        private IEnumerable<MatchedRule> GetMatchingRules(ElementNode elem, Stylesheet stylesheet)
+        private static IEnumerable<MatchedRule> GetMatchingRules(ElementNode elem, Stylesheet stylesheet)
         {
-            return stylesheet.Rules.Select(rule => GetMatchRule(elem, rule)).ToList();
+            return stylesheet.Rules.Select(rule => GetMatchRule(elem, rule)).Where(mr => mr != null).ToList();
         }
 
-        private MatchedRule GetMatchRule(ElementNode elem, Rule rule)
+        private static MatchedRule GetMatchRule(ElementNode elem, Rule rule)
         {
             var match = rule.Selectors.FirstOrDefault(s => IsMatch(elem, s));
+            if (match == null)
+                return null;
+
             return new MatchedRule
             {
                 Specificity = match.Specificity(),
@@ -67,8 +69,8 @@ namespace KidBrowserEngine.Style
             if (selector.Id != elem.Data.Id)
                 return false;
 
-            // Check class selectors
-            if (!selector.Class.Any(c => elem.Data.Classes.Contains(c)))
+            // Check class selectors if they were specified
+            if (selector.Class.Any() && !selector.Class.Any(c => elem.Data.Classes.Contains(c)))
                 return false;
 
             // We didn't find any non-matching selector components.

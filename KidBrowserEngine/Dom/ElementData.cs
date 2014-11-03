@@ -22,13 +22,15 @@ namespace KidBrowserEngine.Dom
         {
             get
             {
-                return
-                    new HashSet<string>(GetAttribute("class").Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries));
+                var classes = GetAttribute("class");
+                return classes == null
+                    ? new HashSet<string>()
+                    : new HashSet<string>(classes.Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries));
             }
         }
         public string GetAttribute(string key)
         {
-            return Attributes[key];
+            return Attributes.ContainsKey(key) ? Attributes[key] : null;
         }
     }
 }

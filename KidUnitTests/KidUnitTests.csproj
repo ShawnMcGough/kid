@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="StylerUnitTests.cs" />
     <Compile Include="CssParserUnitTests.cs" />
     <Compile Include="HtmlParserUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
