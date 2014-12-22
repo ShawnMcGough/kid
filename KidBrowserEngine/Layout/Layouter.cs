@@ -22,14 +22,14 @@ namespace KidBrowserEngine.Layout
         public LayoutBox BuildLayoutTree(StyledNode styledNode)
         {
             // Create the root box.
-            var root = new LayoutBox {StyledNode = styledNode};
+	        LayoutBox root;
             switch (styledNode.GetDisplay())
             {
                 case Display.Inline:
-                    root.BoxType = BoxTypes.Inline;
+					 root = new LayoutBox(new InlineBoxType { Node = styledNode });
                     break;
                 case Display.Block:
-                    root.BoxType = BoxTypes.Block;
+					root = new LayoutBox(new BlockBoxType { Node = styledNode });
                     break;
                 case Display.None:
                     throw new Exception("Root node has display: none.");

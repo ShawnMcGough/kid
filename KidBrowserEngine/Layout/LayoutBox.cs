@@ -9,37 +9,36 @@ namespace KidBrowserEngine.Layout
 	public class LayoutBox
 	{
 		public Dimensions Dimensions { get; set; }
-		public BoxTypes BoxType { get; set; }
+		public BoxType BoxType { get; set; }
 		public StyledNode StyledNode { get; set; }
 		public List<LayoutBox> Children { get; set; }
 
 
-		public LayoutBox()
+		public LayoutBox(BoxType boxType)
 		{
-			BoxType = BoxTypes.AnonymousBlock;
+			BoxType = boxType;
 			Dimensions = new Dimensions();
 			Children = new List<LayoutBox>();
 		}
 
 		private StyledNode GetStyleNode()
 		{
-			return new StyledNode();
-			//switch (BoxType.Type)
-			//{
-			//    case BoxTypes.AnonymousBlock:
-			//        throw new ArgumentOutOfRangeException("BoxType.Type", "Anonymous block box has no style node.");
-			//    case BoxTypes.Block:
-			//        return new BoxType {StyledNode = new StyledNode(), Type = BoxTypes.Block};
-			//    case BoxTypes.Inline:
-			//        return new StyledNode();
-			//    default:
-			//        throw new ArgumentOutOfRangeException();
-			//}
+
+			switch (BoxType.Type)
+			{
+				case BoxTypes.AnonymousBlock:
+					throw new ArgumentOutOfRangeException("BoxType.Type", "Anonymous block box has no style node.");
+				case BoxTypes.Block:
+				case BoxTypes.Inline:
+					return BoxType.Node;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
 		}
 
 		public void Layout(Dimensions containingBlock)
 		{
-			switch (BoxType)
+			switch (BoxType.Type)
 			{
 				case BoxTypes.AnonymousBlock:
 					break;
@@ -231,7 +230,7 @@ namespace KidBrowserEngine.Layout
 
 		public LayoutBox GetInlineContainer()
 		{
-			switch (BoxType)
+			switch (BoxType.Type)
 			{
 				case BoxTypes.Inline:
 				case BoxTypes.AnonymousBlock:
@@ -240,10 +239,10 @@ namespace KidBrowserEngine.Layout
 				case BoxTypes.Block:
 
 					var last = Children.LastOrDefault();
-					if (last != null && last.BoxType == BoxTypes.AnonymousBlock)
+					if (last != null && last.BoxType.Type == BoxTypes.AnonymousBlock)
 						return last;
 
-					var anonymousBlock = new LayoutBox();
+					var anonymousBlock = new LayoutBox(new AnonymousBoxType());
 					Children.Add(anonymousBlock);
 					return anonymousBlock;
 

@@ -53,7 +53,10 @@
     <Compile Include="Dom\Node.cs" />
     <Compile Include="Dom\TextNode.cs" />
     <Compile Include="Html\Parser.cs" />
-    <Compile Include="Layout\AutoSized.cs" />
+    <Compile Include="Layout\AnonymousBoxType.cs" />
+    <Compile Include="Layout\BlockBoxType.cs" />
+    <Compile Include="Layout\BoxTypes.cs" />
+    <Compile Include="Layout\InlineBoxType.cs" />
     <Compile Include="Layout\BoxType.cs" />
     <Compile Include="Layout\LayoutBox.cs" />
     <Compile Include="Layout\EdgeSizes.cs" />

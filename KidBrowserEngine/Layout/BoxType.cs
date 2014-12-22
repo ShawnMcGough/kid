@@ -1,9 +1,16 @@
-﻿namespace KidBrowserEngine.Layout
+﻿using KidBrowserEngine.Style;
+
+namespace KidBrowserEngine.Layout
 {
-    public enum BoxTypes
-    {
-        AnonymousBlock,
-        Block,
-        Inline
-    }
+	public abstract class BoxType
+	{
+
+		public abstract BoxTypes Type { get; }
+		public StyledNode Node { get; set; }
+
+		protected BoxType()
+        {
+			Node = new StyledNode();
+        }
+	}
 }
